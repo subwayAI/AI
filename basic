@@ -1,0 +1,74 @@
+import os labels = ['aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus',
+           'car', 'cat', 'chair', 'cow', 'diningtable', 'dog', 'horse',
+           'motorbike', 'person', 'pottedplant', 'sheep', 'sofa',
+           'train', 'tvmonitor']
+
+需要的标签名字
+
+def ext(ix,aa):
+    annotation=ix
+    for line in open(aa) :
+            #print('line=',line)
+            if '<name>' in line:
+                for i in range( len(labels ) ) :
+                    if labels [i] in line:
+                        labelid = str(i)
+                        #print(labelid,'labelid')
+                        break
+            if '<xmin>' in line:
+                begin = line.find( '<xmin>')
+                #print('begin=',begin)
+                end = line.find ( '</xmin>')
+                xmin = line[begin+6:end]
+            if '<ymin>' in line:
+                begin = line.find( '<ymin>')
+                end = line.find ( '</ymin>')
+                ymin = line [begin+6:end]
+            if '<xmax>' in line:
+                begin = line.find ('<xmax>')
+                end = line.find( '</xmax>')
+                
+                xmax = line [begin+6:end]
+            if '<ymax>' in line:
+                begin = line.find( 'ymax>')
+                end = line.find ( '</ymax>')
+                ymax = line [begin+6: end]
+            
+                result = xmin+','+ymin+','+xmax+','+ymax+','+labelid
+                #xxx.append(result)
+                
+                annotation = annotation + ' ，'+','.join([xmin, ymin, xmax, ymax, str(labelid)])
+    return  annotation          
+ 
+
+
+r=open('1.txt','w')
+for ix in xx:
+    ee=ix.split('/')[-1]
+    #print(ee)
+    ee1=ee.split('.')[0]
+    #print(ee1)
+    
+    aa=a+ee1+'.xml'
+    ee=ext(ix,aa)
+    print(ee)
+    r.write(ee+'\n')
+ 
+
+ 
+
+图 d代表的生成的结果 
+
+import  random 
+import os
+a=r'D:/VOC/test/VOCdevkit/VOC2007/Annotations/'
+b=r'D:/VOC/test/VOCdevkit/VOC2007/JPEGImages/'
+e=os.listdir(b)
+
+
+xx1=[]
+for i in e[1:10]:
+    print(i)
+    xx1.append(b+i)
+代表获得图像路径的程序
+————————————————
